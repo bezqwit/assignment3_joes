@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1> Joe's Hotdog Stand</h1>
+        <h2>Your Order</h2>
+
+        <script>
+            const menu = "WELCOME TO JOE'S HOTDOG STAND!\n\n" +
+                        "MENU\n\n" +
+                        "Hotdog: $5.25\n" +
+                        "French Fries: $3.75\n" +
+                        "Drink: $2.50\n\n" +
+                        "SPECIALS\n" +
+                        "Joe's Meal Deal: $10.00\n" +
+                        "(1 Hotdog + 1 Fries + 1 Drink)\n" +
+                        "10% off orders of $30 or more!";
+            alert(menu);
+
+            const hotdog = 5.25;
+            const fries = 3.75;
+            const drinks = 2.50;
+            const mealDeal = 10.00;
+            const tax = .0625;
+            const discountMin = 30.00;
+            const discount = .10;
+
+
+            let numDogs = parseInt(prompt("How many hot dogs do you want?", "0"));
+            let numFries = parseInt(prompt("How many fries do you want?", "0"));
+            let numSoda = parseInt(prompt("How many sodas do you want?", "0"));
+
+            function showMoney(money){
+                const round = Math.round(money * 100) / 100;
+
+                const whole = Math.floor(round);
+                const decimal = Math.round((round - whole) * 100);
+                
+                let result = whole.toString();
+                
+                if (decimal === 0) {
+                    result = result + '.00';
+                } else if (decimal < 10) {
+                    result = result + '.0' + decimal;
+                } else {
+                    result = result + '.' + decimal;
+                }
+                
+                return result;
+            }
+
+        const numMealDeals = Math.min(numDogs, numFries, numSoda);
+        
+        const dogsLeft = numDogs - numMealDeals;
+        const friesLeft = numFries - numMealDeals;
+        const sodasLeft = numSoda - numMealDeals;
+
+
+        const mealDealTotal = numMealDeals * mealDeal;
+        const hotdogTotal = dogsLeft * hotdog;
+        const friesTotal = friesLeft * fries;
+        const drinkTotal = sodasLeft * drinks;
+
+        
+        let total = mealDealTotal + hotdogTotal + friesTotal + drinkTotal;
+
+        
+        let discountAmount = 0;
+
+        if (total >= discountMin) {
+            discountAmount = total * discount;
+        }
+
+        const totalAfterDiscount = total - discountAmount;
+
+        const taxTotal = totalAfterDiscount * tax;
+        
+        const finalTotal = totalAfterDiscount + taxTotal;
+
+        document.write('<p>' + numMealDeals + ' of Joe\'s Meal Deal: $' + showMoney(mealDealTotal) + '</p>');
+        document.write('<p>' + dogsLeft + ' Hotdog(s) @ $' + showMoney(hotdog) + ': $' + showMoney(hotdogTotal) + '</p>');
+        document.write('<p>' + friesLeft + ' French Fries @ $' + showMoney(fries) + ': $' + showMoney(friesTotal) + '</p>');
+        document.write('<p>' + sodasLeft + ' Drink(s) @ $' + showMoney(drinks) + ': $' + showMoney(drinkTotal) + '</p>');
+        document.write('<p>Subtotal (before discount): $' + showMoney(total) + '</p>');
+        
+        if (discountAmount > 0) {
+            document.write('<p>10% Discount: -$' + showMoney(discountAmount) + '</p>');
+            document.write('<p>Subtotal (after discount): $' + showMoney(totalAfterDiscount) + '</p>');
+        }
+        
+        document.write('<p>Tax (6.25%): $' + showMoney(taxTotal) + '</p>');
+        document.write('<p><strong>TOTAL: $' + showMoney(finalTotal) + '</strong></p>');
+        </script>
+    </body>
+</html>
